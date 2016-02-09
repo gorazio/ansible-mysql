@@ -1,25 +1,50 @@
 # file: mysql/defaults/main.yml
 
-# Basic settings
-mysql_port: 3306
-mysql_bind_address: "0.0.0.0"
+# Common settings
 mysql_default_root_password: ''
 mysql_root_password: 'CHANGEME'
-mysql_language: '/usr/share/mysql/'
 mysql_ppa: ''
+mysql_install_package: 'default'
+
+#General Settings
+mysql_port: 3306
+mysql_bind_address: "0.0.0.0"
+mysql_lc_messages_dir: '/usr/share/mysql/'
+mysql_default_storage_engine: 'InnoDB'
+
+# MyISAM
+mysql_key_buffer: '16M'
+mysql_myisam_recover: 'BACKUP'
+
+# Safety
+mysql_max_allowed_packet: '16M'
+max_connect_errors: 1000000
+
+#Data Storage
+mysql_data_dir: '/var/lib/mysql'
+
+#Binary Logging
+mysql_log_bin: '/var/lib/mysql/mysql-bin'
+mysql_expire_logs_days: 10
+mysql_max_binlog_size: '100M'
+mysql_sync_binlog: 1
+mysql_binlog_format: ROW
+
+# caches and limits
+mysql_tmp_table_size: '16M'
+mysql_max_heap_table_size: '16M'
+mysql_query_cache_type: 0
+mysql_query_cache_limit: '1M'
+mysql_query_cache_size: '0'
+mysql_max_connections: 100
+mysql_thread_stack: '256K'
+mysql_cache_size: '-1'
+mysql_open_files_limit: 5000
+mysql_table_definition_cache: '-1'
+mysql_table_open_cache: 2000
+mysql_thread_concurrency: 10
 
 # Fine Tuning
-mysql_key_buffer: '16M'
-mysql_max_allowed_packet: '128M'
-mysql_thread_stack: '192K'
-mysql_cache_size: 8
-mysql_myisam_recover: 'BACKUP'
-mysql_max_connections: 100
-mysql_table_cache: 64
-mysql_thread_concurrency: 10
-mysql_query_cache_limit: '1M'
-mysql_query_cache_size: '16M'
-mysql_innodb_file_per_table: 'innodb_file_per_table'
 mysql_character_set_server: 'utf8'
 mysql_collation_server: 'utf8_general_ci'
 mysql_mysqldump_max_allowed_packet: '128M'
@@ -32,7 +57,14 @@ mysql_innodb_buffer_pool_size: '128M'
 mysql_innodb_flush_log_at_trx_commit: 1
 mysql_innodb_lock_wait_timeout: 50
 mysql_innodb_log_buffer_size: '1M'
-mysql_innodb_log_file_size: '5M'
+mysql_innodb_log_file_size: '8M'
+
+# LOGGING #
+mysql_log_error: '/var/log/mysql/mysql-error.log'
+mysql_log_queries_not_using_indexes: 1
+mysql_slow_query_log: 1
+mysql_slow_query_log_file: '/var/log/mysql/mysql-slow.log'
+
 
 # Full-Text Search
 mysql_ft_min_word_len: 4

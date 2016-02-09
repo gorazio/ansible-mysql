@@ -1,6 +1,9 @@
 # file: mysql/tasks/main.yml
 
 - include: install.yml
+  when: mysql_install_package == 'default'
+- include: percona.yml
+  when: mysql_install_package == 'percona'
 - include: configure.yml
 - include: secure.yml
 - include: databases.yml

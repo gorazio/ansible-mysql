@@ -1,0 +1,13 @@
+#install percona instead of mysql
+
+- name: MySQL | Install packages
+  apt: pkg=python-mysqldb
+
+- name: MySQL | Download repository package
+  get_url: url=https://repo.percona.com/apt/percona-release_0.1-3.{{ansible_distribution_release}}_all.deb dest=/tmp mode=0440
+
+- name: MySQL | Install repository package
+  apt: deb=/tmp/percona-release_0.1-3.{{ansible_distribution_release}}_all.deb
+
+- name: MySQL | Install percona
+  apt: name=percona-server-server-5.6 update_cache=yes

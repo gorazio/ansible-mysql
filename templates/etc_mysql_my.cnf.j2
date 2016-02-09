@@ -14,73 +14,66 @@ nice        = 0
 
 [mysqld]
 # * Basic Settings
-user        = mysql
-pid-file    = /var/run/mysqld/mysqld.pid
-socket      = /var/run/mysqld/mysqld.sock
-port        = {{ mysql_port }}
-basedir     = /usr
-datadir     = /var/lib/mysql
-tmpdir      = /tmp
-# language is for pre-5.5. In 5.5 it is an alias for lc_messages_dir.
-language = {{ mysql_language }}
-bind-address = {{ mysql_bind_address }}
+user                      = mysql
+default-storage-engine    = {{ mysql_default_storage_engine }}
+pid-file                  = /var/run/mysqld/mysqld.pid
+socket                    = /var/run/mysqld/mysqld.sock
+port                      = {{ mysql_port }}
+basedir                   = /usr
+datadir                   = {{ mysql_data_dir }}
+tmpdir                    = /tmp
+lc-messages-dir           = {{ mysql_lc_messages_dir }}
+bind-address              = {{ mysql_bind_address }}
 skip-external-locking
+character_set_server      = {{ mysql_character_set_server }}
+collation_server          = {{ mysql_collation_server }}
 
-
-# * Fine Tuning
+# MyISAM
 key_buffer              = {{ mysql_key_buffer }}
-max_allowed_packet      = {{ mysql_max_allowed_packet }}
-thread_stack            = {{ mysql_thread_stack }}
-thread_cache_size       = {{ mysql_cache_size }}
 myisam-recover          = {{ mysql_myisam_recover }}
-max_connections         = {{ mysql_max_connections }}
-table_open_cache        = {{ mysql_table_cache }}
-thread_concurrency      = {{ mysql_thread_concurrency }}
 
-# ** Query Cache Configuration
+# Safety
+max_allowed_packet      = {{ mysql_max_allowed_packet }}
+max-connect-errors      = {{ max_connect_errors }}
+
+# Binary Logging
+log_bin            = {{ mysql_log_bin }}
+expire_logs_days   = {{ mysql_expire_logs_days }}
+max_binlog_size    = {{ mysql_max_binlog_size }}
+sync-binlog        = {{ mysql_sync_binlog }}
+binlog_format      = {{ mysql_binlog_format }}
+
+# CACHES AND LIMITS #
+tmp-table-size          = {{ mysql_tmp_table_size }}
+max-heap-table-size     = {{ mysql_max_heap_table_size }}
+query-cache-type        = {{ mysql_query_cache_type }}
 query_cache_limit       = {{ mysql_query_cache_limit }}
 query_cache_size        = {{ mysql_query_cache_size }}
+max_connections         = {{ mysql_max_connections }}
+thread_stack            = {{ mysql_thread_stack }}
+thread_cache_size       = {{ mysql_cache_size }}
+open-files-limit        = {{ mysql_open_files_limit }}
+table-definition-cache  = 1024
+table_open_cache        = {{ mysql_table_open_cache }}
+thread_concurrency      = {{ mysql_thread_concurrency }}
 
-# ** Logging and Replication
-#general_log_file        = /var/log/mysql/mysql.log
-#general_log             = 1
-#
-#log_slow_queries   = /var/log/mysql/mysql-slow.log
-#long_query_time = 2
-#log-queries-not-using-indexes
-#
-# The following can be used as easy to replay backup logs or for replication.
-#server-id      = 1
-#log_bin            = /var/log/mysql/mysql-bin.log
-expire_logs_days    = 10
-max_binlog_size     = 100M
-#binlog_do_db       = include_database_name
-#binlog_ignore_db   = include_database_name
-
-# ** InnoDB
-# InnoDB is enabled by default with a 10MB datafile in /var/lib/mysql/.
-# Read the manual for more InnoDB related options. There are many!
-innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
-innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
+# INNODB #
 {% if mysql_innodb_flush_method != 'fdatasync': %}
 innodb_flush_method = {{ mysql_innodb_flush_method }}
 {% endif %}
+innodb_log_file_size = {{ mysql_innodb_log_file_size }}
+innodb_flush_log_at_trx_commit = {{ mysql_innodb_flush_log_at_trx_commit }}
+{{ mysql_innodb_file_per_table }}
+innodb_buffer_pool_size = {{ mysql_innodb_buffer_pool_size }}
 innodb_lock_wait_timeout = {{ mysql_innodb_lock_wait_timeout }}
 innodb_log_buffer_size = {{ mysql_innodb_log_buffer_size }}
-innodb_log_file_size = {{ mysql_innodb_log_file_size }}
-{{ mysql_innodb_file_per_table }}
 
-# ** Security Features
-# Read the manual, too, if you want chroot!
-# chroot = /var/lib/mysql/
-#
-# For generating SSL certificates I recommend the OpenSSL GUI "tinyca".
-# ssl-ca=/etc/mysql/cacert.pem
-# ssl-cert=/etc/mysql/server-cert.pem
-# ssl-key=/etc/mysql/server-key.pem
+# LOGGING #
+log-error                      = {{ mysql_log_error }}
+log-queries-not-using-indexes  = {{ mysql_log_queries_not_using_indexes }}
+slow-query-log                 = {{ mysql_slow_query_log }}
+slow-query-log-file            = {{ mysql_slow_query_log_file }}
 
-character_set_server = {{ mysql_character_set_server }}
-collation_server = {{ mysql_collation_server }}
 
 # ** Full-Text Search
 ft_min_word_len = {{ mysql_ft_min_word_len }}
