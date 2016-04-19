@@ -29,14 +29,15 @@ character_set_server      = {{ mysql_character_set_server }}
 collation_server          = {{ mysql_collation_server }}
 
 # MyISAM
-key_buffer              = {{ mysql_key_buffer }}
-myisam-recover          = {{ mysql_myisam_recover }}
+key_buffer_size           = {{ mysql_key_buffer }}
+myisam_recover_options    = {{ mysql_myisam_recover }}
 
 # Safety
 max_allowed_packet      = {{ mysql_max_allowed_packet }}
 max-connect-errors      = {{ max_connect_errors }}
 
 # Binary Logging
+server_id          = {{ mysql_server_id }}
 log_bin            = {{ mysql_log_bin }}
 expire_logs_days   = {{ mysql_expire_logs_days }}
 max_binlog_size    = {{ mysql_max_binlog_size }}
@@ -55,7 +56,6 @@ thread_cache_size       = {{ mysql_cache_size }}
 open-files-limit        = {{ mysql_open_files_limit }}
 table-definition-cache  = 1024
 table_open_cache        = {{ mysql_table_open_cache }}
-thread_concurrency      = {{ mysql_thread_concurrency }}
 
 # INNODB #
 {% if mysql_innodb_flush_method != 'fdatasync': %}

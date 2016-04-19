@@ -5,6 +5,7 @@ mysql_default_root_password: ''
 mysql_root_password: 'CHANGEME'
 mysql_ppa: ''
 mysql_install_package: 'default'
+mysql_version: 5.6
 
 #General Settings
 mysql_port: 3306
@@ -24,6 +25,7 @@ max_connect_errors: 1000000
 mysql_data_dir: '/var/lib/mysql'
 
 #Binary Logging
+mysql_server_id: 1
 mysql_log_bin: '/var/lib/mysql/mysql-bin'
 mysql_expire_logs_days: 10
 mysql_max_binlog_size: '100M'
