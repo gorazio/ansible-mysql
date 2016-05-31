@@ -45,6 +45,9 @@ mysql_open_files_limit: 5000
 mysql_table_definition_cache: '-1'
 mysql_table_open_cache: 2000
 mysql_thread_concurrency: 10
+mysql_thread_handling: ''
+mysql_thread_pool_size: "{{ ansible_processor_cores }}"
+
 
 # Fine Tuning
 mysql_character_set_server: 'utf8'

@@ -56,6 +56,11 @@ thread_cache_size       = {{ mysql_cache_size }}
 open-files-limit        = {{ mysql_open_files_limit }}
 table-definition-cache  = 1024
 table_open_cache        = {{ mysql_table_open_cache }}
+{% if mysql_thread_handling != 'pool-of-threads': %}
+thread_handling         = {{ mysql_thread_handling }}
+thread_pool_size        = {{ mysql_thread_pool_size }}
+{% endif %}
+
 
 # INNODB #
 {% if mysql_innodb_flush_method != 'fdatasync': %}
